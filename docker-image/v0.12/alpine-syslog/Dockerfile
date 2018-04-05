@@ -16,10 +16,9 @@ RUN set -ex \
     && echo 'gem: --no-document' >> /etc/gemrc \
     && gem install fluent-plugin-secure-forward \
     && gem install fluent-plugin-record-reformer \
-    && gem install fluent-plugin-rewrite-tag-filter \
     && apk add git \
     && gem install specific_install \
-    && gem specific_install -l https://github.com/georgegoh/fluent-plugin-kubernetes_remote_syslog.git \
+    && gem specific_install -l https://github.com/afking/fluent-plugin-kubernetes_remote_syslog.git \
     && gem install fluent-plugin-kubernetes_metadata_filter \
     && apk del .build-deps \
     && gem sources --clear-all \

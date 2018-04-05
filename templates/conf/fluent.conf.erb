@@ -112,12 +112,27 @@
 </match>
 
 <% when "syslog" %>
+<filter kubernetes.**>
+  @type record_transformer
+  remove_keys docker,stream
+</filter>
+
 <match **>
-  @type kubernetes_remote_syslog
+  @type remote_syslog
   host "#{ENV['SYSLOG_HOST']}"
   port "#{ENV['SYSLOG_PORT']}"
   severity debug
+  program fluentd
+  hostname ${tag[0]}  # kubernetes.var.log.containers.fluentd-5wvrb_kube-system_fluentd-1afe4ba0dcc1f576307131fc8d2571d06b4a46abc8d2c9f20df3b5f32ebcce69.log
   protocol tcp
   packet_size 65535
+
+  <buffer tag>
+    @type memory
+  </buffer>
+
+  <format>
+    @type json
+  </format>
 </match>
 <% end%>
